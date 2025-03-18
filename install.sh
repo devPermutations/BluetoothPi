@@ -58,10 +58,41 @@ setup_virtual_env() {
     
     # Activate virtual environment and install dependencies
     source venv/bin/activate
-    pip install --upgrade pip
-    pip install -e .
+    
+    # Upgrade pip and install wheel
+    pip install --upgrade pip wheel setuptools
+    
+    # Debug: Show current directory and Python path
+    print_message "Current directory: $(pwd)" "$YELLOW"
+    print_message "PYTHONPATH: $PYTHONPATH" "$YELLOW"
+    
+    # Install the package in development mode with explicit path
+    PYTHONPATH=$(pwd)/src pip install -e .
+    
+    # Debug: Show installed packages
+    print_message "Installed packages:" "$YELLOW"
+    pip list
+    
+    # Debug: Show entry points
+    print_message "Entry points:" "$YELLOW"
+    pip show bluetooth-scanner
     
     print_message "Virtual environment setup completed." "$GREEN"
+    
+    # Verify installation
+    if command -v bluetooth-scanner >/dev/null 2>&1; then
+        print_message "bluetooth-scanner command installed successfully" "$GREEN"
+    else
+        print_message "Warning: bluetooth-scanner command not found after installation" "$RED"
+        print_message "Checking virtual environment bin directory:" "$YELLOW"
+        ls -la venv/bin/
+    fi
+    
+    if command -v bluetooth-visualizer >/dev/null 2>&1; then
+        print_message "bluetooth-visualizer command installed successfully" "$GREEN"
+    else
+        print_message "Warning: bluetooth-visualizer command not found after installation" "$RED"
+    fi
 }
 
 # Function to create configuration file

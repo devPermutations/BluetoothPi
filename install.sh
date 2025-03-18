@@ -129,6 +129,21 @@ setup_bluetooth_permissions() {
     print_message "Bluetooth permissions setup completed." "$GREEN"
 }
 
+# Function to create system-wide command links
+setup_commands() {
+    print_message "Setting up system-wide commands..." "$YELLOW"
+    
+    # Create symbolic links for commands
+    ln -sf "$(pwd)/venv/bin/bluetooth-scanner" /usr/local/bin/bluetooth-scanner
+    ln -sf "$(pwd)/venv/bin/bluetooth-visualizer" /usr/local/bin/bluetooth-visualizer
+    
+    # Set proper permissions
+    chmod +x /usr/local/bin/bluetooth-scanner
+    chmod +x /usr/local/bin/bluetooth-visualizer
+    
+    print_message "System-wide commands setup completed." "$GREEN"
+}
+
 # Main installation process
 main() {
     print_message "Starting Bluetooth Scanner installation..." "$YELLOW"
@@ -148,6 +163,9 @@ main() {
     # Setup Bluetooth permissions
     setup_bluetooth_permissions
     
+    # Setup system-wide commands
+    setup_commands
+    
     # Setup systemd service
     setup_service
     
@@ -156,6 +174,7 @@ main() {
     print_message "You can check its status with: sudo systemctl status bluetooth-scanner" "$YELLOW"
     print_message "To view logs: sudo journalctl -u bluetooth-scanner" "$YELLOW"
     print_message "To run the scanner manually: bluetooth-scanner" "$YELLOW"
+    print_message "To run the visualizer: bluetooth-visualizer" "$YELLOW"
 }
 
 # Run main installation process

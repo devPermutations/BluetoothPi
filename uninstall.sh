@@ -97,6 +97,17 @@ remove_package() {
     fi
 }
 
+# Function to remove system-wide command links
+remove_commands() {
+    print_message "Removing system-wide commands..." "$YELLOW"
+    
+    # Remove symbolic links
+    rm -f /usr/local/bin/bluetooth-scanner
+    rm -f /usr/local/bin/bluetooth-visualizer
+    
+    print_message "Removed system-wide commands" "$GREEN"
+}
+
 # Function to clean up build artifacts
 cleanup_build() {
     print_message "Cleaning up build artifacts..." "$YELLOW"
@@ -122,6 +133,9 @@ main() {
     
     # Stop and remove service
     remove_service
+    
+    # Remove system-wide commands
+    remove_commands
     
     # Remove Python package
     remove_package

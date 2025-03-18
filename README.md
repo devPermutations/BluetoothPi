@@ -10,6 +10,7 @@ A Python-based Bluetooth device scanner that identifies and categorizes mobile p
 - Configurable scanning parameters
 - Comprehensive logging
 - Data retention management
+- Real-time console visualization
 
 ## Prerequisites
 
@@ -37,6 +38,11 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
+4. Run the installation script:
+```bash
+sudo ./install.sh
+```
+
 ## Configuration
 
 Create a `.env` file in the project root with the following options:
@@ -52,6 +58,8 @@ MIN_SIGNAL_STRENGTH=-90
 
 ## Usage
 
+### Running the Scanner
+
 Run the scanner:
 ```bash
 python -m bluetooth_scanner
@@ -66,6 +74,39 @@ The scanner will:
 
 To stop the scanner, press Ctrl+C.
 
+### Using the Visualizer
+
+To view real-time device data in a beautiful console interface:
+```bash
+bluetooth-visualizer
+```
+
+The visualizer provides:
+- Real-time device list with details
+- Device classification status
+- Signal strength information
+- First and last seen timestamps
+- Total device counts
+- Mobile vs. other device statistics
+
+To stop the visualizer, press Ctrl+C.
+
+### Uninstallation
+
+To completely remove the Bluetooth Scanner and all its components:
+
+```bash
+sudo ./uninstall.sh
+```
+
+This will:
+1. Stop and remove the systemd service
+2. Remove the Python package
+3. Remove the virtual environment
+4. Remove the database and log files
+5. Remove configuration files
+6. Clean up build artifacts
+
 ## Project Structure
 
 ```
@@ -78,11 +119,14 @@ bluetooth_scanner/
 │       ├── classifier.py
 │       ├── storage.py
 │       ├── config.py
-│       └── logger.py
+│       ├── logger.py
+│       └── visualizer.py
 ├── docs/
 │   ├── architecture.md
 │   └── dataflow.md
 ├── requirements.txt
+├── install.sh
+├── uninstall.sh
 └── README.md
 ```
 

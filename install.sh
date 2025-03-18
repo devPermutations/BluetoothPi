@@ -59,7 +59,7 @@ setup_virtual_env() {
     # Activate virtual environment and install dependencies
     source venv/bin/activate
     pip install --upgrade pip
-    pip install -r requirements.txt
+    pip install -e .
     
     print_message "Virtual environment setup completed." "$GREEN"
 }
@@ -98,8 +98,8 @@ After=bluetooth.target
 Type=simple
 User=pi
 WorkingDirectory=$(pwd)
-Environment=PYTHONPATH=$(pwd)
-ExecStart=$(pwd)/venv/bin/python -m bluetooth_scanner
+Environment=PYTHONPATH=$(pwd)/src
+ExecStart=$(pwd)/venv/bin/bluetooth-scanner
 Restart=always
 RestartSec=10
 
@@ -155,6 +155,7 @@ main() {
     print_message "The Bluetooth Scanner service has been started." "$GREEN"
     print_message "You can check its status with: sudo systemctl status bluetooth-scanner" "$YELLOW"
     print_message "To view logs: sudo journalctl -u bluetooth-scanner" "$YELLOW"
+    print_message "To run the scanner manually: bluetooth-scanner" "$YELLOW"
 }
 
 # Run main installation process
